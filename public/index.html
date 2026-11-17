@@ -1,0 +1,40 @@
+async function handleFormSubmit(event) {
+    event.preventDefault();
+    
+    const form = document.getElementById('contactForm');
+    const successMsg = document.getElementById('formSuccess');
+    
+    const inputs = form.querySelectorAll('input, textarea');
+    const formData = {
+        nama: inputs[0].value,
+        whatsapp: inputs[1].value,
+        pesan: inputs[2].value
+    };
+
+    try {
+        // Memanggil backend melalui path /backend/contact
+        const response = await fetch('/backend/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            form.reset();
+            successMsg.textContent = "Terima kasih! Pesan/Pendaftaran Anda berhasil dikirim.";
+            successMsg.classList.remove('hidden');
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 5000);
+        } else {
+            alert('Gagal mengirim pesan: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan koneksi ke server.');
+    }
+}

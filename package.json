@@ -1,0 +1,11 @@
+{
+  "name": "malta-website",
+  "version": "1.0.0",
+  "description": "Website profil MAS Al-Ittihad dengan Vercel Serverless Backend",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.7"
+  }
+}
